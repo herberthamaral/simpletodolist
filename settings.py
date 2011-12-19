@@ -144,9 +144,3 @@ LOGGING = {
         },
     }
 }
-
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'caholopes'
-EMAIL_HOST_PASSWORD= '30214800'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
