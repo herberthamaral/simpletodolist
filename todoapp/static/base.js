@@ -1,3 +1,11 @@
+var todos = [];
+var user = null;
+var current_id = 0;
+var ws = null;
+
+var user_endpoint = '/api/v1/user/';
+var todo_endpoint = '/api/v1/todo/';
+
 $.tastypie_ajax = function(url, type, data, success){
     $.ajax({
       type: type,
@@ -10,10 +18,6 @@ $.tastypie_ajax = function(url, type, data, success){
     });
 }
 
-var todos = [];
-var user = null;
-var current_id = 0;
-var ws = null;
 
 
 $('#page-1').live('pageinit',function(){
@@ -25,7 +29,7 @@ $('#page-1').live('pageinit',function(){
         var todo = get_todo_by_id(id);
         todo.name = $('#name').val();
         todo.done = $('#done').is(':checked');
-        $.tastypie_ajax('/api/v1/todo/'+id+'/', 'PUT', JSON.stringify(todo), function(){
+        $.tastypie_ajax(todo_endpoint+id+'/', 'PUT', JSON.stringify(todo), function(){
             get_tasks();
             alert('Alterado com sucesso');
             window.history.back();
@@ -37,7 +41,7 @@ $('#page-1').live('pageinit',function(){
         var id = $(this).attr('rel');
         if (confirm('Tem certeza?'))
         {
-            $.tastypie_ajax('/api/v1/todo/'+id+'/','DELETE', '', function(){
+            $.tastypie_ajax(todo_endpoint+id+'/','DELETE', '', function(){
                 alert('excluido com sucesso!');
                 ws.send('refresh');
                 get_tasks();
@@ -62,7 +66,7 @@ $('#page-1').live('pageinit',function(){
 
 
 get_user = function(callback){
-    $.tastypie_ajax('/api/v1/user/', 'GET', '', function(data){
+    $.tastypie_ajax(user_endpoint, 'GET', '', function(data){
         user = data.objects[0];
         init_websocket();
         if (typeof(callback) == "function")
@@ -85,7 +89,7 @@ init_websocket = function(){
 }
 
 get_tasks = function(){
-    $.tastypie_ajax('/api/v1/todo/','GET','',function(data){
+    $.tastypie_ajax(todo_endpoint,'GET','',function(data){
         var items = data.objects;
         todos = data.objects;
         var template = $('#item-template').html()
@@ -107,7 +111,7 @@ add_task_event = function(evt){
 }
 add_task = function(task){
    var data = {name: task, user: user.resource_uri};
-   $.tastypie_ajax('/api/v1/todo/', 'POST', JSON.stringify(data), get_tasks);
+   $.tastypie_ajax(todo_endpoint, 'POST', JSON.stringify(data), get_tasks);
    ws.send('refresh');
 }
 
