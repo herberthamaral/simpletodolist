@@ -1,0 +1,59 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title>TodoApp</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="{{STATIC_URL}}jquery.mobile-1.0.min.css" />
+	<script type="text/javascript" src="{{STATIC_URL}}jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}jquery.mobile-1.0.min.js"></script>
+</head> 
+<body> 
+
+<div data-role="page" id="page-1">
+
+	<div data-role="header">
+		<h1>TodoApp</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+        <p>
+            <input placeholder="digite aqui sua tarefa e tecle enter" maxlength="140" type="text" name="name" id="txttask" value=""  />
+        </p>
+        <div style="margin-top:20px;" class="content-primary">
+            <h2>Todos:</h2>
+            <ul data-role="listview" id="todo">
+            </ul>
+            <p style="margin-top:20px;">
+                <a data-role="button" id="refresh" data-icon="refresh">Refresh</a>
+                <!--<a data-role="button" id="remove-done" data-icon="check">Remover feitos</a>-->
+            </p>
+        </div>
+	</div><!-- /content -->
+</div><!-- /page -->
+
+<div data-role="page" id="page-2">
+
+	<div data-role="header">
+		<h1>Adicionar todo</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">	
+        <input type="hidden" name="id" id="id" value="" />
+        <label for="name">Task</label>
+        <input type="text" name="name" id="name" value=""/>
+        <label for="done">Done</label>
+        <input type="checkbox" id="done" />
+        <p><a data-role="button" rel="" id="submit-changes" data-icon="check">Salvar</a></p>
+        <p><a data-role="button" rel="" id="exclude-task" data-icon="delete">Excluir</a></p>
+        <p><a data-role="button" href="#page-1" data-icon="back">Voltar</a></p>
+    </div>
+</div>
+
+<script src="{{ STATIC_URL }}jquery.tmpl.js"> </script>
+<script src="{{ STATIC_URL }}base.js"></script>
+<script type="application/x-template" id="item-template">
+    <li><a href="#" ref="todo" rel="${id}">${name}</a></li>
+</script>
+
+</body>
+</html>
