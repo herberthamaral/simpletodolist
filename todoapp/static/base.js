@@ -31,7 +31,7 @@ $('#page-1').live('pageinit',function(){
         todo.done = $('#done').is(':checked');
         $.tastypie_ajax(todo_endpoint+id+'/', 'PUT', JSON.stringify(todo), function(){
             get_tasks();
-            alert('Alterado com sucesso');
+            alert('Updated successfully');
             window.history.back();
             ws.send('refresh');
         });
@@ -39,10 +39,10 @@ $('#page-1').live('pageinit',function(){
 
     $('#exclude-task').click(function(){
         var id = $(this).attr('rel');
-        if (confirm('Tem certeza?'))
+        if (confirm('Are you sure?'))
         {
             $.tastypie_ajax(todo_endpoint+id+'/','DELETE', '', function(){
-                alert('excluido com sucesso!');
+                alert('Removed!');
                 ws.send('refresh');
                 get_tasks();
                 window.history.back();
